@@ -5,7 +5,7 @@ import math
 from safetensors.torch import save_model, load_model
 import torch
 
-import wandb
+from loguru import logger
 
 
 @dataclass
@@ -117,7 +117,7 @@ def run_train_model(model, datasets, config, device='cuda'):
             optimizer.step()
 
             overall_step += 1
-            wandb.log({'train/loss': loss.item(), 'lr': lr}, step=overall_step)
+            # logger.info(f'train/loss: {loss.item()} - lr: {lr} -  step={overall_step}')
             print('*', end='')
 
             if (overall_step % config.eval_interval) == 0:
@@ -136,7 +136,6 @@ def run_train_model(model, datasets, config, device='cuda'):
                 print('\n')
                 print(f"overall_steps {overall_step}: {loss.item()}")
                 print(f"val loss: {mean_val_loss}")
-                wandb.log({'val/loss': mean_val_loss}, step=overall_step)
             
                 if mean_val_loss < best_val_loss:
                     best_val_loss = mean_val_loss

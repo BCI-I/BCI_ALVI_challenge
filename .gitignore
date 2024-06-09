@@ -1,5 +1,6 @@
 *.gif
 *.mp4
+*.csv
 tutorials/logs/*
 
 # Byte-compiled / optimized / DLL files
